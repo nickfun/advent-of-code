@@ -1,10 +1,10 @@
 SOURCES := $(wildcard ./*.ts)
-IMAGES  := $(patsubst ./%.ts, ./%.js, $(SOURCES))
+TARGETS  := $(patsubst ./%.ts, ./%.js, $(SOURCES))
 
 run: build
 	node index.js
 
-build: $(IMAGES)
+build: $(TARGETS)
 	@echo "Build Finished"
 
 ./%.js: ./%.ts
