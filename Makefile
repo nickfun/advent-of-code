@@ -16,3 +16,6 @@ clean:
 
 install: package.json 
 	yarn install 
+
+format:
+	node node_modules/.bin/prettier *.ts -w

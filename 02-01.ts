@@ -128,7 +128,7 @@ function exec() {
   var total = 0;
   lines.forEach((lineraw) => {
     // console.log("LINE: ", line);
-    const line = part2[lineraw]
+    const line = part2[lineraw];
     const parts = line.split(" ");
     const result = score(lookup[parts[1]], lookup[parts[0]]);
     total += result;
