@@ -6,6 +6,8 @@ run: format build
 
 build: $(TARGETS) 
 	@echo "Build Finished"
+	@echo
+	@echo
 
 ./%.js: ./%.ts
 	./node_modules/.bin/tsc $<
