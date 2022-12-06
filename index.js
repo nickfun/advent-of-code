@@ -1,2 +1,2 @@
-var app = require("./05");
+var app = require("./06");
 app.exec();

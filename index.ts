@@ -1,3 +1,3 @@
-const app = require("./05");
+const app = require("./06");
 
 app.exec();
