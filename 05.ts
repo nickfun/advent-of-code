@@ -48,13 +48,18 @@ function moveItems(command, stacks) {
     console.log("(skip)");
     return;
   }
+  const holder = [];
   const amount = parseInt(parts[1]);
   const from = parseInt(parts[3]);
   const to = parseInt(parts[5]);
   for (var i = 0; i < amount; i++) {
     const x = stacks[from].shift();
+    holder.push(x);
+    // console.log("Move", x, "From", from, "To", to);
+  }
+  for (var i = 0; i < amount; i++) {
+    const x = holder.pop();
     stacks[to].unshift(x);
-    console.log("Move", x, "From", from, "To", to);
   }
   printStacks(stacks);
 }
