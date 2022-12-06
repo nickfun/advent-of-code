@@ -1,7 +1,7 @@
 SOURCES := $(wildcard ./*.ts)
 TARGETS  := $(patsubst ./%.ts, ./%.js, $(SOURCES))
 
-run: build
+run: format build
 	node index.js
 
 build: $(TARGETS) 
