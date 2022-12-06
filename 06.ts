@@ -21,15 +21,15 @@ function parseLine(line): number {
   var buffer = [];
   for (var i = 0; i < line.length; i++) {
     const ch = line[i];
-    if (buffer.length >= 4) {
+    if (buffer.length >= 14) {
       const v = buffer.shift(); // drop oldest
       console.log("Drop", v);
     }
     buffer.push(ch);
-    if (buffer.length == 4 && hasDupes(buffer) == false) {
+    if (buffer.length == 14 && hasDupes(buffer) == false) {
       return i;
     } else {
-      console.log("no dupes", buffer, buffer.length);
+      //   console.log("no dupes", buffer, buffer.length);
     }
   }
   return line.length;
