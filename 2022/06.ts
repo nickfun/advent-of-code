@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 function input(): string[] {
-  return fs.readFileSync("input-06.txt", "utf-8").split("\n");
+  return fs.readFileSync("2022/input-06.txt", "utf-8").split("\n");
 }
 
 function hasDupes(buf) {

@@ -3,7 +3,7 @@ exports.__esModule = true;
 exports.exec = void 0;
 var fs = require("fs");
 function input() {
-    return fs.readFileSync("input-06.txt", "utf-8").split("\n");
+    return fs.readFileSync("2022/input-06.txt", "utf-8").split("\n");
 }
 function hasDupes(buf) {
     var s = new Set();
