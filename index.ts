@@ -1,3 +1,3 @@
-const app = require("./2022/07");
+const app = require("./2022/08");
 
 app.exec();

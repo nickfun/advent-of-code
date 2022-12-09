@@ -1,2 +1,2 @@
-var app = require("./2022/07");
+var app = require("./2022/08");
 app.exec();
