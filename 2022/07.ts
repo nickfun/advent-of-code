@@ -4,14 +4,10 @@ function input(): string[] {
   return fs.readFileSync("2022/input-07-ex.txt", "utf-8").split("\n");
 }
 
-var zdirs = {
-  sizes: {},
-  path: "/",
-};
-
 class DirData {
   paths: string[] = [];
   sizes: { [keys: string]: number } = {};
+  fullSizes: { [keys: string]: number } = {};
   constructor() {
     this.paths = [];
   }
@@ -34,6 +30,36 @@ class DirData {
     }
     this.sizes[p] += size;
     console.log(p, name, size);
+  }
+  buildFullSize(): void {
+    for (var i in this.sizes) {
+      this.fullSizes[i] = this.fullSize(i);
+    }
+  }
+  fullSize(onePath: string): number {
+    var size = 0;
+    for (var k in this.sizes) {
+      if (this.startsWith(onePath, k)) {
+        size += this.sizes[k];
+      }
+    }
+    return size;
+  }
+  startsWith(start: string, full: string): boolean {
+    if (start.length > full.length) {
+      return false;
+    }
+    if (start === "/") {
+      return true;
+    }
+    const mstart = start + "/",
+      mfull = full + "/";
+    for (var i = 0; i < mstart.length; i++) {
+      if (mstart[i] !== mfull[i]) {
+        return false;
+      }
+    }
+    return true;
   }
 }
 
@@ -63,6 +89,27 @@ function exec() {
   const data = build(input(), dirs);
   console.log("***", "RESULTS");
   console.log(data);
+  const test: [string, string, boolean][] = [
+    ["/abc", "/abc/123", true],
+    ["/", "/abc/123", true],
+    ["/bac/321", "/bac/duff", false],
+    ["/abc", "/abcd", false],
+    ["/", "/ab", true],
+  ];
+  for (var i in test) {
+    const d = test[i];
+    const r = dirs.startsWith(d[0], d[1]);
+    console.log(
+      "starts with",
+      d[0],
+      d[1],
+      dirs.startsWith(d[0], d[1]),
+      "STATUS",
+      d[2] == r ? "PASS" : "FAIL"
+    );
+  }
+  dirs.buildFullSize();
+  console.log(dirs.fullSizes);
 }
 
 export { exec };
