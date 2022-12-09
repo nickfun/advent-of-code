@@ -3,7 +3,8 @@ exports.__esModule = true;
 exports.exec = void 0;
 var fs = require("fs");
 function input() {
-    return fs.readFileSync("2022/input-07-ex.txt", "utf-8").split("\n");
+    return fs.readFileSync("2022/input-07.txt", "utf-8").split("\n");
+    // return fs.readFileSync("2022/input-07-ex.txt", "utf-8").split("\n");
 }
 var DirData = /** @class */ (function () {
     function DirData() {
@@ -40,13 +41,28 @@ var DirData = /** @class */ (function () {
         }
     };
     DirData.prototype.fullSize = function (onePath) {
+        console.log("FULL SIZE OF", onePath);
         var size = 0;
         for (var k in this.sizes) {
             if (this.startsWith(onePath, k)) {
                 size += this.sizes[k];
+                console.log("ADD", k);
+            }
+            else {
+                // console.log("NOO", k);
             }
         }
         return size;
+    };
+    DirData.prototype.part1answer = function () {
+        var total = 0;
+        for (var k in this.fullSizes) {
+            if (this.fullSizes[k] <= 100000) {
+                console.log("Include", k, this.fullSizes[k]);
+                total += this.fullSizes[k];
+            }
+        }
+        return total;
     };
     DirData.prototype.startsWith = function (start, full) {
         if (start.length > full.length) {
@@ -93,19 +109,28 @@ function exec() {
     var data = build(input(), dirs);
     console.log("***", "RESULTS");
     console.log(data);
-    var test = [
-        ["/abc", "/abc/123", true],
-        ["/", "/abc/123", true],
-        ["/bac/321", "/bac/duff", false],
-        ["/abc", "/abcd", false],
-        ["/", "/ab", true],
-    ];
-    for (var i in test) {
-        var d = test[i];
-        var r = dirs.startsWith(d[0], d[1]);
-        console.log("starts with", d[0], d[1], dirs.startsWith(d[0], d[1]), "STATUS", d[2] == r ? "PASS" : "FAIL");
-    }
+    // const test: [string, string, boolean][] = [
+    //   ["/abc", "/abc/123", true],
+    //   ["/", "/abc/123", true],
+    //   ["/bac/321", "/bac/duff", false],
+    //   ["/abc", "/abcd", false],
+    //   ["/", "/ab", true],
+    // ];
+    // for (var i in test) {
+    //   const d = test[i];
+    //   const r = dirs.startsWith(d[0], d[1]);
+    //   console.log(
+    //     "starts with",
+    //     d[0],
+    //     d[1],
+    //     dirs.startsWith(d[0], d[1]),
+    //     "STATUS",
+    //     d[2] == r ? "PASS" : "FAIL"
+    //   );
+    // }
     dirs.buildFullSize();
     console.log(dirs.fullSizes);
+    console.log("Final Answer", dirs.part1answer());
+    console.log("first guess", 1030819, "is too low");
 }
 exports.exec = exec;
