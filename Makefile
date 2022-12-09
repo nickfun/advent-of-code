@@ -20,4 +20,4 @@ install: package.json
 	yarn install 
 
 format:
-	node node_modules/.bin/prettier 2022/*.ts *.ts 2021/*.ts -w
+	node node_modules/.bin/prettier 2022/*.ts *.ts 2021/*.ts -w > /dev/null
