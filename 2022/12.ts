@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 function input(): Array<string> {
-  return fs.readFileSync("2022/input-12-ex.txt", "utf-8").split("\n");
+  return fs.readFileSync("2022/input-12.txt", "utf-8").split("\n");
 }
 class Pos {
   x: number;
@@ -42,6 +42,11 @@ class MyMap {
     }
     return v;
   }
+  debug() {
+    for (const row of this.all) {
+      console.log(row.join(" "));
+    }
+  }
 }
 
 function valueOf(s: string): number {
@@ -74,7 +79,7 @@ function buildMap(lines: Array<string>): MyMap {
         rawmap[x] = [];
       }
       rawmap[x][y] = valueOf(ch);
-      console.log(ch, "=>", rawmap[x][y]);
+      // console.log(ch, "=>", rawmap[x][y]);
     }
   }
   const d = new MyMap();
@@ -92,28 +97,38 @@ function findPath(data: MyMap) {
   var positions: Array<Pos> = [data.start];
   var nextPositions: Array<Pos> = [];
   while (positions.length > 0) {
+    console.log("Step");
     stepCount++;
-    const pos = positions.shift();
-    if (pos === undefined) throw new Error("bad shift");
-    const currentValue = data.getValue(pos);
-    const others: Array<Pos> = pos.neighbors(data.max_x, data.max_y);
-    for (var i in others) {
-      const step: Pos = others[i];
-      if (data.getValue(step) - 1 <= currentValue) {
-        if (!seen.has(step.toKey())) {
-          nextPositions.push(step);
+    nextPositions = [];
+    for (var i = 0; i < positions.length; i++) {
+      const p = positions[i];
+      const neigh = p.neighbors(data.max_x, data.max_y);
+      for (var j = 0; j < neigh.length; j++) {
+        const n = neigh[j];
+        if (seen.has(n.toKey())) {
+          continue;
+        }
+        const diff = data.getValue(n) - data.getValue(p);
+        // console.log("diff", diff);
+        if (diff > 1) {
+          continue;
+        }
+        nextPositions.push(n);
+        seen.add(n.toKey());
+        console.log("add", n.toKey());
+        if (n.is(data.end)) {
+          return stepCount;
         }
       }
     }
-    seen.add(pos.toKey());
     positions = nextPositions;
-    nextPositions = [];
   }
-  return stepCount;
+  throw new Error("Did not find a path");
+  // return stepCount;
 }
 export function exec() {
   console.log("DAY TWELVE");
   const data: MyMap = buildMap(input());
-  console.log(data);
+  // console.log(data);
   console.log("answer", findPath(data));
 }
