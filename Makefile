@@ -1,8 +1,9 @@
-SOURCES := $(wildcard ./*.ts ./2021/*.ts ./2022/*.ts )
+SOURCES := $(wildcard ./*.ts ./2021/*.ts ./2022/*.ts ./2023/*.ts )
 TARGETS  := $(patsubst ./%.ts, ./%.js, $(SOURCES))
 
 run: format build
-	node index.js
+	@echo
+	@node index.js
 
 build: $(TARGETS) 
 	@echo "Build Finished"
@@ -20,4 +21,4 @@ install: package.json
 	yarn install 
 
 format:
-	node node_modules/.bin/prettier 2022/*.ts *.ts 2021/*.ts -w > /dev/null
+	node node_modules/.bin/prettier 2023/*.ts 2022/*.ts *.ts 2021/*.ts -w > /dev/null
