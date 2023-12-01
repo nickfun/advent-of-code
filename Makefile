@@ -11,7 +11,7 @@ build: $(TARGETS)
 	@echo
 
 ./%.js: ./%.ts
-	./node_modules/.bin/tsc $<
+	./node_modules/.bin/tsc $< --lib es2021
 
 clean:
 	rm *.js
